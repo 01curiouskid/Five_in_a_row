@@ -73,7 +73,7 @@ turn = 0 # its player1 turn if variable = 0 otherwise its player2 turn, variable
 while not game_over:
     # Ask for Player1 i/p
     if turn == 0:
-        col = int(input("Player 1 make your selection(0-6): "))
+        col = int(input("Player 1 make your selection(0-8): "))
 
         if is_valid_location(board,col):
             row = get_next_open_row(board, col)
@@ -84,7 +84,7 @@ while not game_over:
                 game_over = True
     # Ask for Player2 i/p
     else:
-        col = int(input("Player 2 make your selection(0-6): "))
+        col = int(input("Player 2 make your selection(0-8): "))
 
         if is_valid_location(board,col):
             row = get_next_open_row(board, col)
