@@ -8,16 +8,16 @@ In main.py, we create a 8x9 board i.e. a 2D numpy array. The board is assumed to
 
 ## Technologies Used
 
-Python
-Pygame
+Python  
+Pygame  
 Numpy
 
 ## Contributers
 
-Adarsh Gupta
-Anmol Sharma
-Aman Pushkar
-Kaushilya
-Parikshit Gehlaut
-Sagar Verma
+Adarsh Gupta  
+Anmol Sharma  
+Aman Pushkar  
+Kaushilya  
+Parikshit Gehlaut  
+Sagar Verma  
 Vivek Kumar
