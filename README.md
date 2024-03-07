@@ -15,8 +15,8 @@ Numpy
 ## Contributers
 
 Adarsh Gupta  
-Anmol Sharma  
 Aman Pushkar  
+Anmol Sharma  
 Kaushilya  
 Parikshit Gehlaut  
 Sagar Verma  
