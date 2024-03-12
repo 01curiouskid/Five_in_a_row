@@ -8,10 +8,10 @@ import sys
 class game:
     
     def __init__(self):
-        self.BLUE=(0,0,255)
-        self.BLACK=(0,0,0)
-        self.RED=(255, 0, 0)
-        self.YELLOW=(255,255,0)
+        # self.BLUE=(0,0,255)
+        # self.BLACK=(0,0,0)
+        # self.RED=(255, 0, 0)
+        # self.YELLOW=(255,255,0)
         # Declaraing Global variables
         self.TARGET = 5 # minimum of dots that should be in a row to game to finish
         self.ROW_COUNTS =  8 # number of Rows in a board
@@ -34,11 +34,11 @@ class game:
         self.turn = 0 # its player1 turn if variable = 0 otherwise its player2 turn, variable remains 0 or 1 only
 
         # pygame.init()
-        self.SQUARESIZE = int(50)
-        self.RADIUS = int(self.SQUARESIZE/2 - 2) # 45
-        self.width = self.COLUMN_COUNTS * self.SQUARESIZE
-        self.height = (self.ROW_COUNTS + 1)* self.SQUARESIZE
-        size = (self.width,self.height)
+        # self.SQUARESIZE = int(50)
+        # self.RADIUS = int(self.SQUARESIZE/2 - 2) # 45
+        # self.width = self.COLUMN_COUNTS * self.SQUARESIZE
+        # self.height = (self.ROW_COUNTS + 1)* self.SQUARESIZE
+        # size = (self.width,self.height)
 
         # self.screen = pygame.display.set_mode(size)
 
