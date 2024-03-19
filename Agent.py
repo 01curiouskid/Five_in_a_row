@@ -1,3 +1,8 @@
+from game import game
+import math
+import random
+from EvaluationFunction import evaluationFunction
+
 class MinimaxAgent:
     def __init__(self):
         self.evaluation_function = evaluationFunction()
@@ -52,3 +57,5 @@ class MinimaxAgent:
 
         return best_column, value
 
+class AlphaBetaAgent:
+    pass
