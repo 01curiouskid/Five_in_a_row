@@ -42,10 +42,11 @@ class evaluationFunction:
             score -= 8
 
         # 5. Edge and Corner Evaluation
-        if window.index(piece) in [0, len(window) - 1]:
-            score -= 2  # Lower score for pieces near edges
-        if window.index(piece) in [1, len(window) - 2]:
-            score -= 1  # Lower score for pieces near edge but not at the corner
+        if piece in window:
+            if window.index(piece) in [0, len(window) - 1]:
+                score -= 2  # Lower score for pieces near edges
+            if window.index(piece) in [1, len(window) - 2]:
+                score -= 1  # Lower score for pieces near edge but not at the corner
 
         # 6. Mobility
         if gameState.EMPTY in window:
