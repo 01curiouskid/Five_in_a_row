@@ -40,6 +40,19 @@ class evaluationFunction:
         # 4. Avoidance of traps
         if window.count(opp_piece) == 3 and window.count(gameState.EMPTY) == 2:
             score -= 8
+
+        # 5. Edge and Corner Evaluation
+        if window.index(piece) in [0, len(window) - 1]:
+            score -= 2  # Lower score for pieces near edges
+        if window.index(piece) in [1, len(window) - 2]:
+            score -= 1  # Lower score for pieces near edge but not at the corner
+
+        # 6. Mobility
+        if gameState.EMPTY in window:
+            score += 1  # Higher score for positions with more mobility
+
+        # 7. Piece Count
+        score += window.count(piece)  # Higher score for more pieces of the player's type
             
 
         return score
