@@ -58,14 +58,14 @@ class game:
     """
     def get_next_open_row(self, board, col):
         for r in range(self.ROW_COUNTS):
-            if board[r][col] == self.EMPTY:
+            if board[r, col].any() == self.EMPTY:   # bug fix .any() used
                 return r
 
     """
     Checking input from user is valid or not
     """
     def is_valid_location(self, board, col):
-        return board[self.ROW_COUNTS - 1, col] == self.EMPTY
+        return board[self.ROW_COUNTS - 1, col].any() == self.EMPTY  # bug fix .any() used
 
     """
     This function is called in order to print the board
