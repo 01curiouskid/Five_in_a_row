@@ -27,8 +27,11 @@ while not game_instance.game_over:
         game_instance.turn += 1
         game_instance.turn = game_instance.turn % 2
 
-    # Ask for Player2 i/p
-    if game_instance.turn == game_instance.AI:
+    # Ask for AI i/p
+    # Ask for AI i/p
+    # bug : when player1 won but game did not end
+    # fix : added another condition "not game_instance.game_over"
+    if game_instance.turn == game_instance.AI and not game_instance.game_over:
         col, minimax_score = MM.minimax(board, 3, True, game_instance)
         if game_instance.is_valid_location(board,col):
             row = game_instance.get_next_open_row(board, col)
