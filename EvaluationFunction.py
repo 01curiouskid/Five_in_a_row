@@ -9,17 +9,38 @@ class evaluationFunction:
 
     def evaluate_window(self, window, piece, gameState: game):
         opp_piece = gameState.PLAYER_PIECE
-        score=0
+        score = 0
+        #basic features
         if piece == gameState.PLAYER_PIECE:
             opp_piece = gameState.AI_PIECE
         if window.count(piece) == 5:
-            score+=100
+            score += 100
         elif window.count(piece) == 4 and window.count(gameState.EMPTY) == 1:
             score += 5
         elif window.count(piece) == 3 and window.count(gameState.EMPTY) == 2:
             score += 2
         if window.count(opp_piece) == 4 and window.count(gameState.EMPTY) == 1:
             score -= 6
+            
+            
+        # Additional features
+        # 1. Winning move detection
+        if window.count(piece) == 4 and window.count(gameState.EMPTY) == 1:
+            if window.index(gameState.EMPTY) in [0, len(window) - 1]:
+                score += 10  # Higher score for open-ended sequences
+
+        # 2. Blocking opponent's winning moves
+        if window.count(opp_piece) == 4 and window.count(gameState.EMPTY) == 1:
+            score -= 15  # Prioritize blocking opponent's potential winning moves
+
+        # 3. Center control
+        if window[len(window) // 2] == piece:
+            score += 3
+
+        # 4. Avoidance of traps
+        if window.count(opp_piece) == 3 and window.count(gameState.EMPTY) == 2:
+            score -= 8
+            
 
         return score
     
