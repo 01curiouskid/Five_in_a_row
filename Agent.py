@@ -3,59 +3,54 @@ import math
 import random
 from EvaluationFunction import evaluationFunction
 
-class MinimaxAgent:
+class MinimaxAgent():
+
     def __init__(self):
-        self.evaluation_function = evaluationFunction()
+        self.evaluation_function=evaluationFunction()
+        pass
 
-    def minimax(self, board, depth, maximizingPlayer, gameState, alpha=-math.inf, beta=math.inf):
-    
-	 if depth == 0 or gameState.isTerminalNode(board):
+    def minimax(self, board, depth, maximizingPlayer, gameState: game):
+        if depth == 0 or gameState.isTerminalNode(board):
             if gameState.isTerminalNode(board):
-                # Evaluate the terminal state
-                if gameState.winning_move(board, gameState.AI_PIECE):
-                    return None, 10000000  # Large reward for winning AI
+                if gameState.winning_move(board,gameState.AI_PIECE):
+                    return None, 10000000
                 elif gameState.winning_move(board, gameState.PLAYER_PIECE):
-                    return None, -10000000  # Large penalty for losing AI
+                    return None, -10000000
                 else:
-                    return None, 0  # Tie
-
-            else:  # Non-terminal state (evaluate using evaluation function)
-                score = self.evaluation_function.score_positions(board, gameState.AI_PIECE, gameState)
-                return None, score
-
-        # Maximizing Player (explore all valid moves)
+                    return None, 0
+            else:
+                obj=self.evaluation_function
+                return None, obj.score_positions(board, gameState.AI_PIECE, gameState)
+        
         if maximizingPlayer:
             value = -math.inf
-            best_column = None
+            column = random.choice(gameState.get_valid_locations(board))
             for col in gameState.get_valid_locations(board):
                 row = gameState.get_next_open_row(board, col)
                 b_copy = board.copy()
                 gameState.drop_piece(b_copy, row, col, gameState.AI_PIECE)
-                _, new_score = self.minimax(b_copy, depth - 1, False, gameState, alpha, beta)
+                new_score = self.minimax(b_copy, depth-1, False, gameState)[1]
                 if new_score > value:
                     value = new_score
-                    best_column = col
-                alpha = max(alpha, value)
-                if alpha >= beta:
-                    return best_column, value  # Beta cut-off
-
-        # Minimizing Player
+                    column = col
+            return column, value
+            
         else:
             value = math.inf
-            best_column = None
+            column = random.choice(gameState.get_valid_locations(board))
             for col in gameState.get_valid_locations(board):
                 row = gameState.get_next_open_row(board, col)
                 b_copy = board.copy()
                 gameState.drop_piece(b_copy, row, col, gameState.PLAYER_PIECE)
-                _, new_score = self.minimax(b_copy, depth - 1, True, gameState, alpha, beta)
+                new_score = self.minimax(b_copy, depth-1, True, gameState)[1]
                 if new_score < value:
                     value = new_score
-                    best_column = col
-                beta = min(beta, value)
-                if beta <= alpha:
-                    return best_column, value  # Alpha cut-off
+                    column = col
+            return column, value
+        
 
-        return best_column, value
 
+# inst=MinimaxAgent()
+        
 class AlphaBetaAgent:
     pass
