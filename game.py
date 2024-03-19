@@ -8,10 +8,10 @@ import sys
 class game:
     
     def __init__(self):
-        # self.BLUE=(0,0,255)
-        # self.BLACK=(0,0,0)
-        # self.RED=(255, 0, 0)
-        # self.YELLOW=(255,255,0)
+        self.BLUE=(0,0,255)
+        self.BLACK=(0,0,0)
+        self.RED=(255, 0, 0)
+        self.YELLOW=(255,255,0)
         # Declaraing Global variables
         self.TARGET = 5 # minimum of dots that should be in a row to game to finish
         self.ROW_COUNTS =  8 # number of Rows in a board
@@ -33,14 +33,14 @@ class game:
         self.game_over = False 
         self.turn = 0 # its player1 turn if variable = 0 otherwise its player2 turn, variable remains 0 or 1 only
 
-        # pygame.init()
-        # self.SQUARESIZE = int(50)
-        # self.RADIUS = int(self.SQUARESIZE/2 - 2) # 45
-        # self.width = self.COLUMN_COUNTS * self.SQUARESIZE
-        # self.height = (self.ROW_COUNTS + 1)* self.SQUARESIZE
-        # size = (self.width,self.height)
+        pygame.init()
+        self.SQUARESIZE = int(50)
+        self.RADIUS = int(self.SQUARESIZE/2 - 2) # 45
+        self.width = self.COLUMN_COUNTS * self.SQUARESIZE
+        self.height = (self.ROW_COUNTS + 1)* self.SQUARESIZE
+        size = (self.width,self.height)
 
-        # self.screen = pygame.display.set_mode(size)
+        self.screen = pygame.display.set_mode(size)
 
     """
     Creating Board using matrix with initial values 0.
@@ -98,19 +98,19 @@ class game:
                 if board[r][c] == piece and board[r-1][c+1] == piece and board[r-2][c+2] == piece and board[r-3][c+3] == piece and board[r-4][c+4] == piece:
                     return True
 
-    # def draw_board(self,board):
-    #     for c in range(self.COLUMN_COUNTS):
-    #         for r in range(self.ROW_COUNTS):
-    #             pygame.draw.rect(self.screen,self.BLUE,(c*self.SQUARESIZE,(r*self.SQUARESIZE)+self.SQUARESIZE ,self.SQUARESIZE,self.SQUARESIZE))
-    #             pygame.draw.circle(self.screen,self.BLACK,(int(c*self.SQUARESIZE+self.SQUARESIZE/2),int((r*self.SQUARESIZE)+(self.SQUARESIZE*1.5 ))),self.RADIUS)
+    def draw_board(self,board):
+        for c in range(self.COLUMN_COUNTS):
+            for r in range(self.ROW_COUNTS):
+                pygame.draw.rect(self.screen,self.BLUE,(c*self.SQUARESIZE,(r*self.SQUARESIZE)+self.SQUARESIZE ,self.SQUARESIZE,self.SQUARESIZE))
+                pygame.draw.circle(self.screen,self.BLACK,(int(c*self.SQUARESIZE+self.SQUARESIZE/2),int((r*self.SQUARESIZE)+(self.SQUARESIZE*1.5 ))),self.RADIUS)
                 
-    #     for c in range(self.COLUMN_COUNTS):
-    #         for r in range(self.ROW_COUNTS):
-    #             if board[r][c] == 1:
-    #                 pygame.draw.circle(self.screen,self.YELLOW,(int(c*self.SQUARESIZE+self.SQUARESIZE/2),self.height-int((r*self.SQUARESIZE)+(self.SQUARESIZE*0.5 ))),self.RADIUS)
-    #             elif board[r][c] == 2:
-    #                 pygame.draw.circle(self.screen,self.RED,(int(c*self.SQUARESIZE+self.SQUARESIZE/2),self.height-int((r*self.SQUARESIZE)+(self.SQUARESIZE*0.5 ))),self.RADIUS)
-    #     pygame.display.update()
+        for c in range(self.COLUMN_COUNTS):
+            for r in range(self.ROW_COUNTS):
+                if board[r][c] == 1:
+                    pygame.draw.circle(self.screen,self.YELLOW,(int(c*self.SQUARESIZE+self.SQUARESIZE/2),self.height-int((r*self.SQUARESIZE)+(self.SQUARESIZE*0.5 ))),self.RADIUS)
+                elif board[r][c] == 2:
+                    pygame.draw.circle(self.screen,self.RED,(int(c*self.SQUARESIZE+self.SQUARESIZE/2),self.height-int((r*self.SQUARESIZE)+(self.SQUARESIZE*0.5 ))),self.RADIUS)
+        pygame.display.update()
 
 
     def get_valid_locations(self, board):
@@ -123,8 +123,5 @@ class game:
     def isTerminalNode(self, board):
         return self.winning_move(board, self.PLAYER_PIECE) or self.winning_move(board, self.AI_PIECE) or len(self.get_valid_locations(board)) == 0
 
-    '''
-    Implementing MINIMAX algorithm
-    '''
 
    
