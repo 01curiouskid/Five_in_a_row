@@ -22,6 +22,10 @@ BLUE = (0, 0, 255)
 # Define fonts
 font = pygame.font.Font(None, 36)
 
+# Global score variables
+player_score = 0
+ai_score = 0
+
 # Function to draw buttons for board size selection
 def draw_board_size_selection():
     # Load background image
@@ -33,33 +37,24 @@ def draw_board_size_selection():
     button_hover_color = (200, 0, 0)  # Darker red on hover
     font = pygame.font.Font('freesansbold.ttf', 32)
 
-    # Small button
-    small_button_rect = pygame.Rect(50, 100, 200, 50)
-    pygame.draw.rect(screen, button_color, small_button_rect, border_radius=5)
-    small_text = font.render("Small (6x7)", True, (255, 255, 255))
-    small_text_rect = small_text.get_rect(center=small_button_rect.center)
-    screen.blit(small_text, small_text_rect)
+    # List of board sizes and their corresponding scores
+    board_sizes = [(6, 7), (8, 9), (10, 11)]
 
-    # Medium button
-    medium_button_rect = pygame.Rect(50, 200, 200, 50)
-    pygame.draw.rect(screen, button_color, medium_button_rect, border_radius=5)
-    medium_text = font.render("Medium (8x9)", True, (255, 255, 255))
-    medium_text_rect = medium_text.get_rect(center=medium_button_rect.center)
-    screen.blit(medium_text, medium_text_rect)
-
-    # Large button
-    large_button_rect = pygame.Rect(50, 300, 200, 50)
-    pygame.draw.rect(screen, button_color, large_button_rect, border_radius=5)
-    large_text = font.render("Large (10x11)", True, (255, 255, 255))
-    large_text_rect = large_text.get_rect(center=large_button_rect.center)
-    screen.blit(large_text, large_text_rect)
+    # Draw buttons for board size selection
+    for i, (rows, cols) in enumerate(board_sizes):
+        button_rect = pygame.Rect(50, 100 + 100 * i, 200, 50)
+        pygame.draw.rect(screen, button_color, button_rect, border_radius=5)
+        text = font.render(f"{rows}x{cols}", True, (255, 255, 255))
+        text_rect = text.get_rect(center=button_rect.center)
+        screen.blit(text, text_rect)
 
     pygame.display.update()
 
+    return board_sizes
+
 # Function to run the game loop and return the winner
 def run_game(board_size):
-    player_score = 0
-    ai_score = 0
+    global player_score, ai_score
 
     game_instance = game.game(board_size)  # Use game instead of Game
     MM = Agent.MinimaxAgent()
@@ -68,6 +63,9 @@ def run_game(board_size):
     board = game_instance.create_board()  # create board
     game_instance.draw_board(board)
     pygame.display.update()
+
+    player_score = 0
+    ai_score = 0
 
     for _ in range(5):  # Run for 5 rounds
         while not game_instance.game_over:
@@ -124,13 +122,13 @@ def run_game(board_size):
         game_instance.draw_board(board)
         pygame.display.update()
 
-# Call the function to draw the board size selection
-draw_board_size_selection()
+    return player_score, ai_score
 
-# Variable to hold the selected board size
-board_size = None
+# Call the function to draw the board size selection
+board_sizes = draw_board_size_selection()
 
 # Event loop for selecting board size
+board_size = None
 while board_size is None:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -138,16 +136,16 @@ while board_size is None:
             sys.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = pygame.mouse.get_pos()
-            if 50 <= mouse_pos[0] <= 250:
-                if 100 <= mouse_pos[1] <= 150:
-                    board_size = 6, 7
-                elif 200 <= mouse_pos[1] <= 250:
-                    board_size = 8, 9
-                elif 300 <= mouse_pos[1] <= 350:
-                    board_size = 10, 11
+            for i, (rows, cols) in enumerate(board_sizes):
+                if 50 <= mouse_pos[0] <= 250 and 100 + 100 * i <= mouse_pos[1] <= 100 + 100 * (i + 1):
+                    board_size = (rows, cols)
+                    break
 
 # Run the game loop
-run_game(board_size)
+player_score, ai_score = run_game(board_size)
+
+# Print final scores
+print(f"Final scores - Player1: {player_score}, Player2: {ai_score}")
 
 # Quit pygame
 pygame.quit()
