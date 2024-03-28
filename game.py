@@ -8,9 +8,9 @@ import sys
 class game:
     
     def __init__(self):
-        self.BLUE=(0,0,255)
+        self.BLUE=(0,100,255)
         self.BLACK=(0,0,0)
-        self.RED=(255, 0, 0)
+        self.RED=(200, 0, 0)
         self.YELLOW=(255,255,0)
         # Declaraing Global variables
         self.TARGET = 5 # minimum of dots that should be in a row to game to finish
