@@ -85,6 +85,8 @@ def run_game(board_size):
                                 print("Player1 won !! Congrats !!")
                                 player_score += 1  # Increment player score
                                 game_instance.game_over = True
+                            if game_instance.is_draw(board):
+                                game_instance.game_over = True
                         game_instance.print_board(board)
                         game_instance.draw_board(board)
                         game_instance.turn += 1
@@ -100,8 +102,10 @@ def run_game(board_size):
                         print("Player2 won !! Congrats !!")
                         ai_score += 1  # Increment AI score
                         game_instance.game_over = True
+                    if game_instance.is_draw(board):
+                        game_instance.game_over = True
 
-                    game_instance.print_board(board)
+                    # game_instance.print_board(board)
                     game_instance.draw_board(board)
                     game_instance.turn += 1
                     game_instance.turn = game_instance.turn % 2

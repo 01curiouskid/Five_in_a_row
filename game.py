@@ -67,6 +67,8 @@ class game:
     """
     def print_board(self, board):
         print(np.flip(board, 0))
+        print("************************************")
+        print()
 
     """
     Everytime player 1 or 2 make their move this function checks whether winning condition is met or not,
@@ -93,6 +95,13 @@ class game:
             for r in range(self.TARGET - 1, self.ROW_COUNTS):
                 if board[r][c] == piece and board[r-1][c+1] == piece and board[r-2][c+2] == piece and board[r-3][c+3] == piece and board[r-4][c+4] == piece:
                     return True
+
+    def is_draw(self,board):
+        for c in range(self.COLUMN_COUNTS):
+            for r in range(self.ROW_COUNTS):
+                if board[r][c] == 0:
+                    return False
+        return True;
 
     def draw_board(self, board):
         for c in range(self.COLUMN_COUNTS):
