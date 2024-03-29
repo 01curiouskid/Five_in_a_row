@@ -2,6 +2,7 @@ from game import game
 import math
 import random
 from EvaluationFunction import evaluationFunction
+import copy
 
 class MinimaxAgent():
 
@@ -56,7 +57,7 @@ class AlphaBetaAgent():
     def __init__(self):
         self.evaluation_function = evaluationFunction()
 
-    def alphabeta(self, board, depth, maximizingPlayer, gameState, alpha=-math.inf, beta=math.inf):
+    def alphabeta(self, board, depth, maximizingPlayer, gameState:game, alpha=-math.inf, beta=math.inf):
 
         if depth == 0 or gameState.isTerminalNode(board):
             if gameState.isTerminalNode(board):
@@ -105,3 +106,121 @@ class AlphaBetaAgent():
                     return best_column, value  # Alpha cut-off
 
         return best_column, value
+
+
+class MonteCarloAgent:
+    def __init__(self, simulations=100):
+        self.simulations = simulations
+        self.evaluation_function = evaluationFunction()
+
+    def monte_carlo_search(self, board, gameState:game):
+        root = Node(board, None, gameState)
+
+        for _ in range(self.simulations):
+            node = root
+            temp_game_state = copy.copy(gameState)
+            temp_board = board.copy()
+
+            # Selection phase
+            while not node.is_terminal():
+                if not node.is_fully_expanded():
+                    node = node.expand()
+                    break
+                else:
+                    node = node.select_child()
+                    break
+
+            # Simulation phase
+            winner = node.simulate(temp_board, temp_game_state) 
+
+            # Backpropagation phase
+            while node is not None:
+                node.update(winner)
+                node = node.parent
+
+        # Choose the best move based on the most visited child
+        return root.best_child().move
+
+
+class Node:
+    def __init__(self, board, move, game_state, parent=None):
+        self.board = board
+        self.move = move
+        self.game_state = game_state
+        self.parent = parent
+        self.children = []
+        self.visits = 0
+        self.wins = 0
+        self.score=0  #scoring positions
+        self.evaluation_function = evaluationFunction()
+
+    def is_terminal(self):
+        return self.game_state.isTerminalNode(self.board)
+
+    def is_fully_expanded(self):
+        return len(self.children) == len(self.game_state.get_valid_locations(self.board))
+
+    def expand(self):
+        valid_moves = self.game_state.get_valid_locations(self.board)
+        for move in valid_moves:
+            temp_board = self.board.copy()
+            # print(temp_board)
+            temp_game_state = self.game_state
+            row = temp_game_state.get_next_open_row(temp_board, move)
+            temp_game_state.drop_piece(temp_board, row, move, temp_game_state.AI_PIECE)
+            self.children.append(Node(temp_board, move, temp_game_state, self))
+        return random.choice(self.children)
+
+    def select_child(self):
+        C = 2  # Exploration parameter
+        selected_child = None
+        max_uct = -math.inf
+
+        for child in self.children:
+            try:
+                uct = (child.wins / child.visits) + C * math.sqrt(math.log(self.visits) / child.visits)
+            except ZeroDivisionError:
+                uct=math.inf
+            if uct > max_uct:
+                max_uct = uct
+                selected_child = child
+
+        return selected_child
+
+    def simulate(self, board, game_state):        
+        temp_board = board.copy()
+        temp_game_state = copy.copy(game_state)
+        #adding
+        piece = temp_game_state.PLAYER_PIECE
+        while not temp_game_state.isTerminalNode(temp_board):
+            valid_moves = temp_game_state.get_valid_locations(temp_board)
+            random_move = random.choice(valid_moves)
+            row = temp_game_state.get_next_open_row(temp_board, random_move)
+            temp_game_state.drop_piece(temp_board, row, random_move, temp_game_state.AI_PIECE)
+
+            self.score+=self.evaluation_function.score_positions(temp_board, piece, temp_game_state)    # different scoring
+
+            if temp_game_state.winning_move(temp_board, piece):
+                return piece
+            
+            if(piece==temp_game_state.PLAYER_PIECE):
+                piece=temp_game_state.AI_PIECE
+            else:
+                piece=temp_game_state.PLAYER_PIECE
+
+        return 0  # Tie
+
+    def update(self, winner):
+        self.visits += 1
+        if winner == self.game_state.AI_PIECE:
+            self.wins += 1
+        elif winner==self.game_state.PLAYER_PIECE:
+            self.wins -= 1
+        self.score=0
+
+    def best_child(self):
+        return max(self.children, key=lambda x: x.visits)
+
+
+
+
