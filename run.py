@@ -59,6 +59,7 @@ def run_game(board_size):
     game_instance = game.game(board_size)  # Use game instead of Game
     MM = Agent.MinimaxAgent()
     AB = Agent.AlphaBetaAgent()
+    MCST=Agent.MonteCarloAgent()
 
     board = game_instance.create_board()  # create board
     game_instance.draw_board(board)
@@ -95,6 +96,7 @@ def run_game(board_size):
             # Ask for AI input
             if game_instance.turn == game_instance.AI and not game_instance.game_over:
                 col, minimax_score = AB.alphabeta(board, 4, True, game_instance)
+                # col=MCST.monte_carlo_search(board,game_instance)
                 if game_instance.is_valid_location(board, col):
                     row = game_instance.get_next_open_row(board, col)
                     game_instance.drop_piece(board, row, col, game_instance.AI_PIECE)
