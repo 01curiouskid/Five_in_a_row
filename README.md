@@ -18,6 +18,7 @@ We intregrated graphics using Pygame and implemented Alpha Beta pruning. Now, Pl
 
 Mini-Max Algorithm  
 Alpha-Beta Pruning
+Monte Carlo Search 
 
 ## Technologies Used
 
