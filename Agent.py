@@ -251,7 +251,7 @@ class Node:
         if winner == self.game_state.AI_PIECE:
             self.wins += 1
         elif winner==self.game_state.PLAYER_PIECE:
-            self.wins -= -1 
+            self.wins += 0
         # self.score=0
 
     def best_child(self,game_state):
