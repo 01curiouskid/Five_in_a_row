@@ -232,7 +232,7 @@ class Node:
             row = temp_game_state.get_next_open_row(temp_board, random_move)
             temp_game_state.drop_piece(temp_board, row, random_move, piece)
 
-            self.score+=self.evaluation_function.score_positions(temp_board, piece, temp_game_state)    # different scoring
+            # self.score+=self.evaluation_function.score_positions(temp_board, piece, temp_game_state)    # different scoring
 
             # game_state.print_board(temp_board)
 
@@ -249,10 +249,10 @@ class Node:
     def update(self, winner):
         self.visits += 1
         if winner == self.game_state.AI_PIECE:
-            self.wins += self.score
+            self.wins += 1
         elif winner==self.game_state.PLAYER_PIECE:
-            self.wins -= self.score 
-        self.score=0
+            self.wins -= -1 
+        # self.score=0
 
     def best_child(self,game_state):
         # return self.select_child(game_state.AI_PIECE, game_state)
