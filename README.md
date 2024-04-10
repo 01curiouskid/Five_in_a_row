@@ -2,17 +2,19 @@
 
 ## Five in a row is classic game connect 5, Players take turns dropping colored discs into a vertical grid with the goal of connecting five of their own discs horizontally, vertically, or diagonally.
 
-## Week 1 Updates
+## Setup
 
-In main.py, we create a 8x9 board i.e. a 2D numpy array. The board is assumed to be vertical. When a player chooses a column to make its move, then the player's token (say 1 for player 1) takes the least unfilled position of that column.
+Follow the given instructions
 
-## Week 2 Updates
+1. Clone the repository: git clone [https://github.com/Anmol779/five_in_a_row.git](https://github.com/Anmol779/five_in_a_row.git)
+2. Install required dependencies given in requirement.txt
+3. Run command "python run.py" to start the game
 
-We implemented Mini-Max Algorithm in Agent.py and created evaluation function. So, now a player can play with AI in terminal.
+## Usage
 
-## Week 3 Updates
-
-We intregrated graphics using Pygame and implemented Alpha Beta pruning. Now, Player can play game using Pygame window. 
+1. Pygame window will appear.
+2. Select the difficulty level.
+3. Select the board size and start playing against AI.
 
 ## Search Algorithms Used
 
