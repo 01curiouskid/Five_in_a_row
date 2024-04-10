@@ -99,7 +99,7 @@ def run_game(board_size, depth):
 
     game_instance = game.game(board_size)  # Use game instead of Game
     AB = Agent.AlphaBetaAgent()
-
+    MCTS=Agent.MonteCarloAgent()
     board = game_instance.create_board()  # create board
     game_instance.draw_board(board)
     pygame.display.update()
