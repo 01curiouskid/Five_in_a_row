@@ -134,7 +134,10 @@ def run_game(board_size, depth):
 
             # Ask for AI input
             if game_instance.turn == game_instance.AI and not game_instance.game_over:
-                col, minimax_score = AB.alphabeta(board, depth, True, game_instance)
+                if depth==2:
+                    col=MCTS.monte_carlo_search(board, game_instance)
+                else:
+                    col, minimax_score = AB.alphabeta(board, depth, True, game_instance)
                 if game_instance.is_valid_location(board, col):
                     row = game_instance.get_next_open_row(board, col)
                     game_instance.drop_piece(board, row, col, game_instance.AI_PIECE)
