@@ -6,7 +6,7 @@
 
 Follow the given instructions
 
-1. Clone the repository: git clone [https://github.com/Anmol779/five_in_a_row.git](https://github.com/Anmol779/five_in_a_row.git)
+1. Clone the repository: git clone [https://github.com/01curiouskid/Five_in_a_row.git](https://github.com/01curiouskid/Five_in_a_row.git)
 2. Install required dependencies given in requirement.txt
 3. Run command "python run.py" to start the game
 
